@@ -1,0 +1,34 @@
+services:
+  vote-api:
+    image: dracalar/docker-workshop-vote-api:latest
+    build:
+      context: ./vote-api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  dashboard:
+    image: dracalar/docker-workshop-vote-dashboard:latest
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    depends_on:
+      - vote-api
+    restart: unless-stopped
+
+volumes:
+  redis-data:

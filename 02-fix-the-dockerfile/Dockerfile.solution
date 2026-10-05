@@ -1,0 +1,19 @@
+# ✅ FIXED DOCKERFILE (Production Best Practice)
+FROM node:22-alpine
+
+# 1. Establish an isolated working directory
+WORKDIR /app
+
+# 2. Leverage Docker layer caching:
+# Copy dependency manifests first so npm install layer is cached
+COPY package.json .
+RUN npm install --production
+
+# 3. Copy application source code
+COPY server.js .
+
+# 4. Expose the actual port used by server.js
+EXPOSE 3000
+
+# 5. Use exec form for proper signal forwarding (Ctrl+C works cleanly)
+CMD ["node", "server.js"]

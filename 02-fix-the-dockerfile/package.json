@@ -1,0 +1,10 @@
+{
+  "name": "docker-workshop-diagnostics",
+  "version": "1.0.0",
+  "description": "Lightweight diagnostics server for Docker workshop",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}
